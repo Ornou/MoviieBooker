@@ -23,6 +23,7 @@ export class UserService {
         const hashedPassword = await bcrypt.hash(newUser.password, 10);
         const user = await this.prisma.user.create({
             data: {
+                name: newUser.name,
                 email: newUser.email,
                 password: hashedPassword,
             },
@@ -56,5 +57,18 @@ export class UserService {
         const token = this.jwtService.sign(payload);
         return { token, user };
 
+    }
+    async validateUser(email: string, password: string): Promise<any> {
+        const user = await this.prisma.user.findUnique({
+            where: { email },
+        });
+        if (!user) {
+            return null;
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return null;
+        }
+        return user;
     }
 }

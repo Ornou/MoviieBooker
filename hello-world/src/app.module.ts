@@ -1,17 +1,16 @@
 import { Module } from '@nestjs/common';
-import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { PrismaService } from './prisma/prisma.service';
-import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
 @Module({
   imports: [UserModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      global: true,
-      signOptions: { expiresIn: '3h' },
-    })
+   ConfigModule.forRoot({
+    isGlobal: true,
+   }),
+   HttpModule,
   ],
   controllers: [],
-  providers: [AppService, PrismaService],
+  providers: [PrismaService],
 })
 export class AppModule {}
