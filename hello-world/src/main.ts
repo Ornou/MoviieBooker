@@ -10,7 +10,6 @@ async function bootstrap() {
     .setTitle('MoviieBooker API')
     .setDescription('The MoviieBooker API description')
     .setVersion('1.0')
-    .addTag('MoviieBooker')
     .addBearerAuth(
       {
         type: 'http',
