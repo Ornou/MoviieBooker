@@ -1,9 +1,9 @@
-import { Body, Controller, Post,Get,UseGuards,Req  } from '@nestjs/common';
+import { Body, Controller, Post, Get, UseGuards, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from 'src/guard/jwt-auth.guard';
-import { ApiBearerAuth} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 
 @ApiBearerAuth('Access-Token')
 @Controller('user')
@@ -11,12 +11,35 @@ export class UserController {
       constructor(private readonly userService: UserService) {}
     
       @Post('auth/login')
-      async login(@Body() credentials:LoginDto) {
+      @ApiBody({ 
+        type: LoginDto,
+        examples: {
+          example1: {
+            value: {
+              email: 'user@example.com',
+              password: 'password'
+            }
+          }
+        }
+      })
+      async login(@Body() credentials: LoginDto) {
         return this.userService.login(credentials);
       }
     
       @Post('auth/register')
-      async register(@Body() newUser:RegisterDto) {
+      @ApiBody({ 
+        type: RegisterDto,
+        examples: {
+          example1: {
+            value: {
+              name: 'John Doe',
+              email: 'user@example.com',
+              password: 'password'
+            }
+          }
+        }
+      })
+      async register(@Body() newUser: RegisterDto) {
         return this.userService.register(newUser);
       }
     
