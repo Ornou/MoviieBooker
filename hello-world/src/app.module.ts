@@ -3,7 +3,7 @@ import { UserModule } from './user/user.module';
 import { PrismaService } from './prisma/prisma.service';
 import { ConfigModule } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
-import { MoviesModule } from './movies/movies.module';
+import { MoviesModule } from 'src/movies/movies.module';
 @Module({
   imports: [UserModule,
    ConfigModule.forRoot({
