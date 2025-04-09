@@ -21,17 +21,23 @@ export class MoviesController {
         return this.moviesService.discoverMovies({ page, sort_by});
         }
 
-    @Get(':movieId')
-    async getMovieById(@Query('movieId') movieId: string) {
-        return this.moviesService.getMovieById(movieId);
-    }
-
     @Get('genre/list')
     async getGenres() {
         return this.moviesService.getGenres();
     }
+    @Get('now_playing')
+    @ApiQuery({ name: 'language', required: false, type: String, example: 'fr-FR' })
+    @ApiQuery({ name: 'region', required: false, type: String, example: 'FR' })
+@   ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
+    async getNowPlaying(@Query('language') language = 'fr-FR',
+    @Query('region') region = 'FR',
+    @Query('page') page = 1,
+  ) {
+    return this.moviesService.getNowPlaying(language, region, page);
+    }
 
-    async getNowPlaying() {
-        return this.moviesService.getNowPlaying();
+    @Get(':movieId')
+    async getMovieById(@Query('movieId') movieId: string) {
+        return this.moviesService.getMovieById(movieId);
     }
 }

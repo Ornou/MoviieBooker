@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios, { AxiosInstance } from 'axios';
-import * as https from 'https';
-
 @Injectable()
 export class MoviesService {
     private readonly axiosInstance: AxiosInstance;
@@ -12,12 +10,6 @@ export class MoviesService {
       const token = this.configService.get<string>('TMDB_READ_ACCESS_TOKEN');
       this.axiosInstance = axios.create({
         baseURL,
-        params: {
-          api_key: this.configService.get<string>('TMDB_API_KEY'),
-        },
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false,
-        }),
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -67,12 +59,18 @@ export class MoviesService {
       }
     }
 
-    async getNowPlaying(): Promise<any> {
+    async getNowPlaying(language: string, region: string, page: number): Promise<any> {
       try {
-        const response = await this.axiosInstance.get('/movie/now_playing');
+        const response = await this.axiosInstance.get('/movie/now_playing', {
+          params: {
+            language,
+            region,
+            page,
+          },
+        });
         return response.data;
-      } catch (err) {
-        console.error('Erreur TMDB :', err.message);
+      } catch (err: any) {
+        console.error('Erreur TMDB :', err.response?.data || err.message);
         return null;
       }
     }
