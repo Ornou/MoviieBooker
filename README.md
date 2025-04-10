@@ -10,7 +10,6 @@ Une API REST pour la gestion des réservations de films, développée avec NestJ
 - Documentation Swagger
 
 
-```
 ## Structure du Projet
 
 ```
