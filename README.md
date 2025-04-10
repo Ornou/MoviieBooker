@@ -10,12 +10,6 @@ Une API REST pour la gestion des réservations de films, développée avec NestJ
 - Documentation Swagger
 
 
-2. .env.exemple
-```
-DATABASE_URL=postgresql://moviiebooker_user1475_lz8j_user:MhicXPWbNvrryhhsszBtKXlkF2zVKzcV6U5Q6fMRA@dpg-cvrqd48gjchc73bg5ub0-a/moviiebooker_lz8j_user
-JWT_SECRET="votre-secret-jwt"
-TMDB_BASE_URL="https://api.themoviedb.org/3"
-TMDB_READ_ACCESS_TOKEN="votre-token-tmdb"
 ```
 ## Structure du Projet
 
